@@ -7,6 +7,16 @@ import LiveUsers from './components/LiveUsers';
 import Logo from './components/Logo';
 import { socket } from './utils/socket';
 
+import { WagmiConfig, createClient } from "wagmi";
+import { ConnectKitProvider, ConnectKitButton, getDefaultClient } from "connectkit";
+const alchemyId = "NHFZoZRJFpBvN_4K43IjYfSExkLQ1LdB";
+const client = createClient(
+  getDefaultClient({
+    appName: "Your App Name",
+    alchemyId,
+  }),
+);
+
 export type ServerMessageTypeUnion = 'connected' | 'disconnected';
 
 type MessageObject = {
@@ -117,32 +127,37 @@ const App = () => {
   };
 
   return (
-    <Wrapper>
-      <Header>
-        <HeaderContent>
-          <LogoWrapper>
-            <StyledLogo />
-            <LogoText>Oki</LogoText>
-          </LogoWrapper>
-          <LiveUsers
-            count={userCount}
-            userHistory={userHistory}
-            showUserModal={showUserModal}
-            onToggleModal={() => setShowUserModal(!showUserModal)}
-          />
-        </HeaderContent>
-      </Header>
-      <StyledMessageList messages={messages} />
-      <StyledMessageInput />
+    <WagmiConfig client={client}>
+      <ConnectKitProvider>
+        <Wrapper>
+          <Header>
+            <HeaderContent>
+              <LogoWrapper>
+                <StyledLogo />
+                <LogoText>Oki</LogoText>
+              </LogoWrapper>
+              <LiveUsers
+                count={userCount}
+                userHistory={userHistory}
+                showUserModal={showUserModal}
+                onToggleModal={() => setShowUserModal(!showUserModal)}
+              />
+              <ConnectKitButton />
+            </HeaderContent>
+          </Header>
+          <StyledMessageList messages={messages} />
+          <StyledMessageInput />
 
-      {showModal && (
-        <UsernameModal
-          onSubmit={handleModalSubmit}
-          userColors={getOnlineUserColors()}
-          errorMessage={errorMessage}
-        />
-      )}
-    </Wrapper>
+          {showModal && (
+            <UsernameModal
+              onSubmit={handleModalSubmit}
+              userColors={getOnlineUserColors()}
+              errorMessage={errorMessage}
+            />
+          )}
+        </Wrapper>
+      </ConnectKitProvider>
+    </WagmiConfig>
   );
 };
 

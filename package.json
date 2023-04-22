@@ -18,13 +18,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connectkit": "^1.2.1",
+    "ethers": "^5.7.2",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
+    "styled-components": "^5.3.9",
     "uuid": "^9.0.0",
+    "wagmi": "^0.11.7",
     "xss": "^1.0.14"
   },
   "devDependencies": {
